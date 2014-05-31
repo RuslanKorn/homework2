@@ -1,11 +1,11 @@
 <h1>All Movies</h1>
-
+<%= render 'checkbox' %>
 <table id="movies">
   <thead>
     <tr>
-      <th>Movie Title</th>
+      <th><%= link_to "Movie Title", movies_path %></th>
       <th>Rating</th>
-      <th>Release Date</th>
+      <th><%= link_to "Release Date" %></th>
       <th>More Info</th>
     </tr>
   </thead>

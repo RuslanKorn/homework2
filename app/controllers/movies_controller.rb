@@ -2,6 +2,7 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+    @all_ratings = %w{G PG PG-13 NC-17 R}
   end
 
   def show
@@ -41,6 +42,10 @@ class MoviesController < ApplicationController
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_url
+  end
+
+  def order
+    @movies = Movie.all
   end
 
   private
