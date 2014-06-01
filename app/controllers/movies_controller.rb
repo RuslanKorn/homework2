@@ -1,16 +1,23 @@
 class MoviesController < ApplicationController
 
   def index
-    if params[:sort_title] == "title"
-      @movies = Movie.order("title ASC")
-      @color_title = "highlight"
-    elsif params[:sort_date] == "date"
-      @movies = Movie.order("release_date ASC")
-      @color_date = "highlight"
-    else
-      @movies = Movie.all
-    end
     @all_ratings = %w{G PG PG-13 NC-17 R}
+    @rate = @all_ratings
+    if params[:ratings]
+      @rate = params[:ratings].keys
+      @movies = Movie.where(rating: params[:ratings].keys)
+      @rate << params[:ratings]
+    else
+      if params[:sort_title] == "title"
+        @movies = Movie.order("title ASC")
+        @color_title = "highlight"
+      elsif params[:sort_date] == "date"
+        @movies = Movie.order("release_date ASC")
+        @color_date = "highlight"
+      else
+        @movies = Movie.all
+      end
+    end
   end
 
   def show
