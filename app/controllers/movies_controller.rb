@@ -4,24 +4,29 @@ class MoviesController < ApplicationController
     @all_ratings = %w{G PG PG-13 NC-17 R}
     @rate = session[:ratings]
     @rate ||= @all_ratings
+    session[:ratings].nil? ? @movies = Movie.all :  @movies = Movie.where(rating: session[:ratings].keys)
     if params[:ratings]
+      session.delete(:sort_date)
+      session.delete(:sort_title)
       session[:ratings] = params[:ratings]
       @rate = session[:ratings].keys
       @movies = Movie.where(rating: session[:ratings].keys)
     else
       if params[:sort_title] == "title" or !session[:sort_title].nil?
+        @color_title = "highlight"
+        session.delete(:sort_date)
         session[:sort_title] = params[:sort_title]
         @movies = Movie.where(rating: session[:ratings].keys).order("title ASC")
-        @color_title = "highlight"
-      elsif params[:sort_date] == "date" or !session[:sort_date].nil?
+      end
+      if params[:sort_date] == "date" or !session[:sort_date].nil?
+        @color_title = ""
+        @color_date = "highlight"
+        session.delete(:sort_title)
         session[:sort_date] = params[:sort_date]
         @movies = Movie.where(rating: session[:ratings].keys).order("release_date ASC")
-        @color_date = "highlight"
-      else
-         session[:ratings].nil? ? @movies = Movie.all :  @movies = Movie.where(rating: session[:ratings].keys)
       end
-    end
   end
+end
 
   def show
     @movie = find_movie
