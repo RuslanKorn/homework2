@@ -3,7 +3,7 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = %w{G PG PG-13 NC-17 R}
     @rate = session[:ratings]
-    @rate = @all_ratings if @rate.nil?
+    @rate ||= @all_ratings
     if params[:ratings]
       session[:ratings] = params[:ratings]
       @rate = session[:ratings].keys
