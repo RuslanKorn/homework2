@@ -1,32 +1,11 @@
 class MoviesController < ApplicationController
+  helper_method :ratings_params, :all_ratings
 
   def index
-    @all_ratings = %w{G PG PG-13 NC-17 R}
-    @rate = session[:ratings]
-    @rate ||= @all_ratings
-    session[:ratings].nil? ? @movies = Movie.all :  @movies = Movie.where(rating: session[:ratings].keys)
-    if params[:ratings]
-      session.delete(:sort_date)
-      session.delete(:sort_title)
-      session[:ratings] = params[:ratings]
-      @rate = session[:ratings].keys
-      @movies = Movie.where(rating: session[:ratings].keys)
-    else
-      if params[:sort_title] == "title" or !session[:sort_title].nil?
-        @color_title = "highlight"
-        session.delete(:sort_date)
-        session[:sort_title] = params[:sort_title]
-        @movies = Movie.where(rating: session[:ratings].keys).order("title ASC")
-      end
-      if params[:sort_date] == "date" or !session[:sort_date].nil?
-        @color_title = ""
-        @color_date = "highlight"
-        session.delete(:sort_title)
-        session[:sort_date] = params[:sort_date]
-        @movies = Movie.where(rating: session[:ratings].keys).order("release_date ASC")
-      end
+    session[:sort_by] = params[:sort_by] if params[:sort_by]
+    session[:ratings] = params[:ratings] if params[:ratings]
+    @movies = Movie.where(rating: ratings_params.keys).order(session[:sort_by])
   end
-end
 
   def show
     @movie = find_movie
@@ -67,10 +46,6 @@ end
     redirect_to movies_url
   end
 
-  def order
-    @movies = Movie.all
-  end
-
   private
 
   def find_movie
@@ -79,6 +54,14 @@ end
 
   def movie_params
     params[:movie].permit(:title, :rating, :release_date, :description)
+  end
+
+  def all_ratings
+    @all_ratings ||= Movie.all_ratings
+  end
+
+  def ratings_params
+    session[:ratings] || Hash[all_ratings.map {|x| [x, "1"]}]
   end
 
 end
