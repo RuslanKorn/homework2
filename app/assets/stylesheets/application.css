@@ -40,8 +40,8 @@ table#movies {
   border-bottom: 2px solid black;
 }
 
-table#movies th.highlight {
-  background-color: yellow;
+table#movies th.hidden {
+  display: none;
 }
 table#movies th {
   border: 2px solid white;
