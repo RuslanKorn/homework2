@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th class="<%= "highlight" if session[:sort_by] == "title" %>">
-        <%= link_to "Movie Title", movies_path(sort_by: "title")%>
+        <%= link_to "Move Title", movies_path(sort_by: "title")%>
       </th>
       <th>Rating</th>
       <th class="<%= "highlight" if session[:sort_by] == "release_date" %>">
@@ -16,7 +16,7 @@
   <tbody>
     <% @movies.each do |movie| %>
       <tr class="<%=cycle('list_line_odd','list_line_even') %>">
-        <td><%= movie.title %></td>
+        <td><%= link_to movie.title, movie_path(movie) %></td>
         <td><%= movie.rating %></td>
         <td><%= movie.release_date %></td>
         <td><%= truncate(movie.description) %> <%= link_to "More→", movie_path(movie) %></td>

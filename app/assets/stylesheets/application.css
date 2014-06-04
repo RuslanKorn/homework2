@@ -47,6 +47,7 @@ table#movies th {
   border: 2px solid white;
   font-weight: bold;
   background-color: wheat;
+  font-size: 16px;
 }
 table#movies th, table#movies td {
   padding: 4px;
@@ -80,3 +81,9 @@ span.html_tag {
 .list_line_odd {
     background: white;
   }
+ input[type="text"], select, textarea {
+    resize: none;
+    border-radius: 5px;
+}
+
+
