@@ -39,10 +39,6 @@ table#movies {
   width: 100%;
   border-bottom: 2px solid black;
 }
-
-table#movies th.hidden {
-  display: none;
-}
 table#movies th {
   border: 2px solid white;
   font-weight: bold;
