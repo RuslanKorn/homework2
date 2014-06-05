@@ -81,5 +81,7 @@ span.html_tag {
     resize: none;
     border-radius: 5px;
 }
-
+p.description {
+  width: 300px ;
+}
 
