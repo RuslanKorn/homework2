@@ -4,21 +4,11 @@
   <thead>
     <tr>
       <th>
-        <%= link_to_if(session[:sort_by] != "title" && session[:sort_by] != "title DESC", "Move Title",  movies_path(sort_by: "title") ) do 
-          link_to_if(session[:sort_by] == "title DESC", "Move Title ↓",  movies_path(sort_by: "title") ) do
-            link_to_if(session[:sort_by] == "title", "Move Title ↑",  movies_path(sort_by: "title DESC") )
-             end
-            end 
-          %>
+        <%= sortable 'title', 'movie title' %>
       </th>
       <th>Rating</th>
       <th>
-        <%= link_to_if(session[:sort_by] != "release_date" && session[:sort_by] != "release_date DESC", "Release Date", movies_path(sort_by: "release_date") ) do
-          link_to_if(session[:sort_by] == "release_date DESC", "Release Date ↓", movies_path(sort_by: "release_date") ) do
-            link_to_if(session[:sort_by] == "release_date", "Release Date ↑", movies_path(sort_by: "release_date DESC") )
-              end
-            end
-          %>
+        <%= sortable 'release_date', 'release date' %>
       </th>
       <th>Description</th>
     </tr>
