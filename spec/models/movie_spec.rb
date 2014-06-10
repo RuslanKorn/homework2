@@ -76,6 +76,45 @@ describe Movie do
     it "Empty rating" do
       Movie.list(:rating => []).should eq([])
     end
-
   end
+
+  context 'validates' do
+    before(:each) do
+      @movie = Movie.create(title: 'bbb', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.')
+    end
+    it "is valid with valid attributes" do
+      @movie.should be_valid
+    end
+
+     it "is not valid without a title" do
+        @movie.title = nil
+        @movie.errors_on(:title).should include("can't be blank")  
+        @movie.should_not be_valid
+     end
+   
+     it "is not valid without a rating" do
+        @movie.rating = nil
+        @movie.errors_on(:rating).should include("can't be blank")  
+        @movie.should_not be_valid
+     end
+
+     it "is not valid without a description" do
+        @movie.description = nil
+        @movie.errors_on(:description).should include("can't be blank")  
+        @movie.should_not be_valid
+     end
+
+     it "is not valid without a uniqueness title" do
+        @movie1 = Movie.create(title: 'bbb', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.')
+        @movie1.errors_on(:title).should include("has already been taken")  
+        @movie1.should_not be_valid
+     end
+
+     it "is not valid without a release date format" do
+        @movie.release_date = '123-123-123'
+        @movie.errors_on(:release_date).should include("format must be yyyy-mm-dd")  
+        @movie.should_not be_valid
+     end     
+
+   end
 end
