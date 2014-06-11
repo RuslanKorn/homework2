@@ -57,7 +57,7 @@ class MoviesController < ApplicationController
   end
 
   def all_ratings
-    @all_ratings ||= Movie.all_ratings
+    @all_ratings ||= %w{G PG PG-13 R NC-17}
   end
 
   def ratings_params
@@ -65,4 +65,3 @@ class MoviesController < ApplicationController
   end
 
 end
-

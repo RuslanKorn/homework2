@@ -15,7 +15,7 @@
         <td><%= link_to movie.title, movie_path(movie) %></td>
         <td><%= movie.rating %></td>
         <td><%= movie.release_date %></td>
-        <td><%= truncate(movie.description) %> <%= link_to "More→", movie_path(movie) %></td>
+        <td><%= truncate(movie.description) %> <%= link_to "More →", movie_path(movie) %></td>
       </tr>
     <% end %>
   </tbody>
