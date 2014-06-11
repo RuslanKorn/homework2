@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20140528064816) do
     t.string   "rating"
     t.text     "description"
     t.date     "release_date"
+    t.string   "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
