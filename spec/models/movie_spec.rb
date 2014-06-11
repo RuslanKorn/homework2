@@ -7,32 +7,32 @@ describe Movie do
     end
 
     it 'One movie - one rating' do
-      Movie.create(title: 'aaa', rating: 'R', release_date: '1992-02-05', description: 'Nice movie.')
+      Movie.create(title: 'aaa', rating: 'R', release_date: '1992-02-05', description: 'Nice movie.', image_url: '1.jpg')
       expect(Movie.all_ratings).to eq(['R'])
     end
 
     it 'Another movie - another rating' do
-      Movie.create(title: 'aaa', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.')
+      Movie.create(title: 'aaa', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.', image_url: '1.jpg')
       expect(Movie.all_ratings).to eq(['PG'])
     end
 
     it 'Two movies - two ratings' do
-      Movie.create(title: 'aaa', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.')
-      Movie.create(title: 'bbb', rating: 'R', release_date: '1992-02-05', description: 'Nice movie.')
+      Movie.create(title: 'aaa', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.', image_url: '1.jpg')
+      Movie.create(title: 'bbb', rating: 'R', release_date: '1992-02-05', description: 'Nice movie.', image_url: '1.jpg')
       expect(Movie.all_ratings).to eq(['PG', 'R'])
     end
 
     it 'No duplicates' do
-      Movie.create(title: 'aaa', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.')
-      Movie.create(title: 'bbb', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.')
+      Movie.create(title: 'aaa', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.', image_url: '1.jpg')
+      Movie.create(title: 'bbb', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.', image_url: '1.jpg')
       expect(Movie.all_ratings).to eq(['PG'])
     end
   end
 
   context ".list" do
-    let!(:movie_one) {Movie.create(title: 'bbb', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.')}
-    let!(:movie_two) {Movie.create(title: 'aaa', rating: 'G', release_date: '1994-02-05', description: 'Nice movie.')}
-    let!(:movie_three) {Movie.create(title: 'zzz', rating: 'NC-17', release_date: '1990-02-05', description: 'Nice movie.')}
+    let!(:movie_one) {Movie.create(title: 'bbb', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.', image_url: '1.jpg')}
+    let!(:movie_two) {Movie.create(title: 'aaa', rating: 'G', release_date: '1994-02-05', description: 'Nice movie.', image_url: '1.jpg')}
+    let!(:movie_three) {Movie.create(title: 'zzz', rating: 'NC-17', release_date: '1990-02-05', description: 'Nice movie.', image_url: '1.jpg')}
     it "Order by title ASC" do
       Movie.list(:order => 'title').should eq([movie_two, movie_one, movie_three])
     end
@@ -80,7 +80,7 @@ describe Movie do
 
   context 'validates' do
     before(:each) do
-      @movie = Movie.create(title: 'bbb', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.')
+      @movie = Movie.create(title: 'bbb', rating: 'PG', release_date: '1992-02-05', description: 'Nice movie.', image_url: '1.jpg')
     end
     it "is valid with valid attributes" do
       @movie.should be_valid
@@ -114,7 +114,13 @@ describe Movie do
         @movie.release_date = '123-123-123'
         @movie.errors_on(:release_date).should include("format must be yyyy-mm-dd")  
         @movie.should_not be_valid
-     end     
+     end    
+
+     it "is not valid without a  valid image url" do
+        @movie.image_url = '123.bmp'
+        @movie.errors_on(:image_url).should include("must be a URL for GIF, JPG or PNG image.")  
+        @movie.should_not be_valid
+     end   
 
    end
 end
