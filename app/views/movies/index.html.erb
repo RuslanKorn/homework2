@@ -15,9 +15,9 @@
         <td><%= link_to movie.title, movie_path(movie) %></td>
         <td><%= movie.rating %></td>
         <td><%= movie.release_date %></td>
-        <td><%= truncate(movie.description) %> <%= link_to "More →", movie_path(movie) %></td>
+        <td><%= truncate(movie.description) %> <%= link_to "More →", movie_path(movie, param: 'all') %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<%= link_to_if(signed_in?, 'Add new movie', new_movie_path) {} %>
+<%= link_to_if(admin?, 'Add new movie', new_movie_path) {} %>

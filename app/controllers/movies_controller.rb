@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   before_action :authorize
-  helper_method :ratings_params, :all_ratings
+  helper_method :ratings_params, :all_ratings, :admin?
 
   def index
     session[:sort_by] = params[:sort_by] if params[:sort_by]
@@ -63,6 +63,11 @@ class MoviesController < ApplicationController
 
   def ratings_params
     session[:ratings] || Hash[all_ratings.map {|x| [x, "1"]}]
+  end
+
+  def admin?
+    admin = ['admin@admin.com', '123@123.com']
+    admin.include? current_user.email
   end
 
 end

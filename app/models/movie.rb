@@ -17,4 +17,5 @@ scope :list, ->(options) {
   def self.all_ratings
     all.map(&:rating).uniq
   end
+
 end

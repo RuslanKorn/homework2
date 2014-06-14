@@ -1,7 +1,7 @@
-<%= render 'movie_about', movie: @movie %>
+<%= render 'movie', movie: @movie %>
 
-<% if signed_in? %>
+<% if current_user.email == 'admin@admin.com' %>
 <%= link_to "Edit", [:edit, @movie] %>
 <%= button_to "Delete", @movie, method: :delete, data: { confirm: "Are you sure?" } %>
-<%= link_to "Back to movie list", movies_path %>
 <% end %>
+<%= link_to "Back to movie list", movies_path %>
