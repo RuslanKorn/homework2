@@ -1,4 +1,5 @@
 class MoviesController < ApplicationController
+  before_action :signed_in?
   helper_method :ratings_params, :all_ratings
 
   def index

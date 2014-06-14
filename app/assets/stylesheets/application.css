@@ -84,4 +84,10 @@ span.html_tag {
 p.description {
   width: 300px ;
 }
-
+.login {
+  float:right;
+  margin-right: 20px;
+}
+.none-line {
+ text-decoration: none;
+}
