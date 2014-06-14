@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :signed_in?
+  before_action :authorize
   helper_method :ratings_params, :all_ratings
 
   def index
