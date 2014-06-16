@@ -1,6 +1,6 @@
 <%= render 'movie', movie: @movie %>
 
-<% if current_user.email == 'admin@admin.com' %>
+<% if admin? %>
 <%= link_to "Edit", [:edit, @movie] %>
 <%= button_to "Delete", @movie, method: :delete, data: { confirm: "Are you sure?" } %>
 <% end %>

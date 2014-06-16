@@ -54,7 +54,7 @@ class MoviesController < ApplicationController
   end
 
   def movie_params
-    params[:movie].permit(:title, :rating, :release_date, :description, :image_url)
+    params[:movie].permit(:title, :rating, :release_date, :description, :avatar)
   end
 
   def all_ratings
