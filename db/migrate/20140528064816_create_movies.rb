@@ -5,7 +5,7 @@ class CreateMovies < ActiveRecord::Migration
       t.string :rating
       t.text :description
       t.date :release_date
-      t.has_attached_file :avatar
+      t.string  :avatar
 
       # Add fields that let Rails automatically keep track
       # of when movies are added or modified:

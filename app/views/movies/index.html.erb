@@ -13,7 +13,7 @@
   <tbody>
     <% @movies.each do |movie| %>
       <tr class="<%=cycle('list_line_odd','list_line_even') %>">
-        <td><%= image_tag movie.avatar.url(:thumb) %></td>
+        <td><%= image_tag movie.avatar.thumb.url %></td>
         <td><%= link_to movie.title, movie_path(movie, param: 'all') %></td>
         <td><%= movie.rating %></td>
         <td><%= movie.release_date %></td>

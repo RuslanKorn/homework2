@@ -1,6 +1,5 @@
 class Movie < ActiveRecord::Base
-  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => 'question_:style.jpg'
-  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  mount_uploader :avatar, AvatarUploader
   validates :title, :rating, :description, presence: true
   validates :title, uniqueness: true
   validates_format_of :release_date, with: /\A(\d{4}-\d{2}-\d{2})\z/, :message => "format must be yyyy-mm-dd"
