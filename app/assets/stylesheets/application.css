@@ -91,3 +91,6 @@ p.description {
 .none-line {
  text-decoration: none;
 }
+.image {
+  width: 80px;
+}
