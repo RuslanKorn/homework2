@@ -9,10 +9,12 @@
   <%= f.text_field :release_date, size: 24 %>
 
   <%= f.label :avatar %>
-  <%= image_tag(@movie.avatar_url) if @movie.avatar? %> 
+  <%= image_tag(@movie.avatar.medium.url) if @movie.avatar? %> 
   <%= f.file_field :avatar %>
-  <%= f.check_box :remove_avatar %>
   <%= f.hidden_field :avatar_cache %> 
+
+  <%= f.label :remove_avatar %>
+  <%= f.check_box :remove_avatar %>
 
   <%= f.label :description %>
   <%= f.text_area :description, size: "24x6" %>

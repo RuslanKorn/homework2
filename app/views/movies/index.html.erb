@@ -8,6 +8,8 @@
       <th>Rating</th>
       <th><%= sortable 'release_date', 'release date' %></th>
       <th>Description</th>
+      <th class='image'>Your Mov</th>
+      <th class='image'>Creator</th>
     </tr>
   </thead>
   <tbody>
@@ -18,8 +20,10 @@
         <td><%= movie.rating %></td>
         <td><%= movie.release_date %></td>
         <td><%= truncate(movie.description) %> <%= link_to "More →", movie_path(movie, param: 'all') %></td>
+        <td><%= check_box_tag '','1', movie.user_id == current_user.id, {disabled: :true} %></td>
+        <td><%= movie.user_id == current_user.id ? 'You' : movie.user.email %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<%= link_to_if(admin?, 'Add new movie', new_movie_path) {} %>
+<%= link_to 'Add new movie', new_movie_path %>

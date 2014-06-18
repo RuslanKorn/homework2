@@ -16,6 +16,9 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'clearance'
 
 gem 'mini_magick'
+
+gem 'pundit'
+
 gem 'carrierwave'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

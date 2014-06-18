@@ -1,4 +1,6 @@
 class Movie < ActiveRecord::Base
+  belongs_to :user
+  
   mount_uploader :avatar, AvatarUploader
   validates :title, :rating, :description, presence: true
   validates :title, uniqueness: true

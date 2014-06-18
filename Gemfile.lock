@@ -81,6 +81,8 @@ GEM
     nokogiri (1.6.2.1-x86-mingw32)
       mini_portile (= 0.6.0)
     polyglot (0.3.4)
+    pundit (0.2.3)
+      activesupport (>= 3.0.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -167,6 +169,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   mini_magick
+  pundit
   rails (= 4.1.1)
   rspec-rails (= 2.99)
   sass-rails (~> 4.0.3)

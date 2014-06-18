@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
-  before_action :authorize
-  helper_method :ratings_params, :all_ratings, :admin?
+  before_action :require_login
+  helper_method :ratings_params, :all_ratings, :allow
 
   def index
     session[:sort_by] = params[:sort_by] if params[:sort_by]
@@ -18,6 +18,8 @@ class MoviesController < ApplicationController
 
   def create
     @movie = Movie.new movie_params
+    @movie.user_id = current_user.id
+
     if @movie.save
       flash[:notice] = "#{@movie.title} was successfully created."
       redirect_to movies_url
@@ -28,10 +30,14 @@ class MoviesController < ApplicationController
 
   def edit
     @movie = find_movie
+    authorize @movie
   end
 
   def update
     @movie = find_movie
+    authorize @movie
+    @movie.remove_avatar!
+    @movie.save
     if @movie.update_attributes(movie_params)
       flash[:notice] = "#{@movie.title} was successfully updated."
       redirect_to @movie
@@ -54,7 +60,7 @@ class MoviesController < ApplicationController
   end
 
   def movie_params
-    params[:movie].permit(:title, :rating, :release_date, :description, :avatar)
+    params[:movie].permit(:title, :rating, :release_date, :description, :avatar, :user_id)
   end
 
   def all_ratings
@@ -65,9 +71,8 @@ class MoviesController < ApplicationController
     session[:ratings] || Hash[all_ratings.map {|x| [x, "1"]}]
   end
 
-  def admin?
-    admin = ['admin@admin.com', '123@123.com']
-    admin.include? current_user.email
+  def allow
+    Pundit.policy!(current_user, @movie)
   end
 
 end
