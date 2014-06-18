@@ -20,8 +20,11 @@
         <td><%= movie.rating %></td>
         <td><%= movie.release_date %></td>
         <td><%= truncate(movie.description) %> <%= link_to "More →", movie_path(movie, param: 'all') %></td>
-        <td><%= check_box_tag '','1', movie.user_id == current_user.id, {disabled: :true} %></td>
-        <td><%= movie.user_id == current_user.id ? 'You' : movie.user.email %></td>
+        <td>
+          <%= 'Draft' if movie.draft %><br>
+          <%= check_box_tag '','1', movie.user_id == current_user.id, {disabled: :true} %>
+        </td>
+        <td><%= movie.user.email %></td>
       </tr>
     <% end %>
   </tbody>

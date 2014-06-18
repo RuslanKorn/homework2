@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   before_action :require_login
-  helper_method :ratings_params, :all_ratings, :allow
+  helper_method :ratings_params, :all_ratings, :allow, :creator?
 
   def index
     session[:sort_by] = params[:sort_by] if params[:sort_by]
@@ -18,7 +18,7 @@ class MoviesController < ApplicationController
 
   def create
     @movie = Movie.new movie_params
-    @movie.user_id = current_user.id
+    @movie.user = current_user
 
     if @movie.save
       flash[:notice] = "#{@movie.title} was successfully created."
@@ -60,7 +60,7 @@ class MoviesController < ApplicationController
   end
 
   def movie_params
-    params[:movie].permit(:title, :rating, :release_date, :description, :avatar, :user_id)
+    params[:movie].permit(:title, :rating, :release_date, :description, :avatar, :draft)
   end
 
   def all_ratings
