@@ -5,7 +5,7 @@ class MoviesController < ApplicationController
   def index
     session[:sort_by] = params[:sort_by] if params[:sort_by]
     session[:ratings] = params[:ratings] if params[:ratings]
-    @movies = Movie.list(rating: ratings_params.keys, order: session[:sort_by])
+    @movies = MoviePolicy::Scope.new(current_user, Movie.list(rating: ratings_params.keys, order: session[:sort_by])).resolve
   end
 
   def show
