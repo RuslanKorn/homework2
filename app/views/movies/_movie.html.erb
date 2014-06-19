@@ -5,6 +5,9 @@
   <li>Creator: <%= movie.user.email %></li>
   <li>Rating: <%= movie.rating %></li>
   <li>Released on: <%= movie.release_date %></li>
+  <% if movie.draft %>
+    <li>In draft</li>
+  <% end %>
 </ul>
 
 <h3>Description</h3>

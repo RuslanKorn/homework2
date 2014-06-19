@@ -19,6 +19,8 @@ gem 'mini_magick'
 
 gem 'pundit'
 
+gem 'paper_trail'
+
 gem 'carrierwave'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
