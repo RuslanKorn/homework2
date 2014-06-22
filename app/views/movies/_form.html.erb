@@ -9,7 +9,7 @@
   <%= f.text_field :release_date, size: 24 %>
 
   <%= f.label :avatar %>
-  <%= image_tag(@movie.avatar.medium.url) if @movie.avatar? && allow.update? %> 
+  <%= image_tag(@movie.avatar.medium.url) if @movie.avatar?%> 
   <%= f.file_field :avatar %>
   <%= f.hidden_field :avatar_cache %> 
 
