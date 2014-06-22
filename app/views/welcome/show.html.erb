@@ -1,5 +1,3 @@
 <h1>Welcome!</h1>
-<%= link_to_if signed_in?, "See all movies", movies_path do %>
-  
-<% end %>
+<%= link_to_if(signed_in?, "See all movies", movies_path){} %>
 <%= render 'movies/movie', movie: @sample_movie %>

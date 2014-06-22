@@ -5,10 +5,10 @@ class MoviesController < ApplicationController
   def index
     session[:sort_by] = params[:sort_by] if params[:sort_by]
     session[:ratings] = params[:ratings] if params[:ratings]
-    @movies = MoviePolicy::Scope.new(current_user, Movie.list(rating: ratings_params.keys, order: session[:sort_by])).resolve
+    @movies = policy_scope(Movie.list(rating: ratings_params.keys, order: session[:sort_by]))
   end
 
-  def show
+  def show 
     @movie = find_movie
   end
 
@@ -36,14 +36,29 @@ class MoviesController < ApplicationController
   def update
     @movie = find_movie
     authorize @movie
-    @movie.remove_avatar!
-    @movie.save
-    if @movie.update_attributes(movie_params)
+    @movie.attributes = movie_params
+    if @movie.valid?
+      unless @movie.draft?
+        Movie.create! Movie.find(@movie.id).attributes.except('id', 'created_at', 'updated_at')
+        @movie.draft = true
+      end
+      @movie.save
       flash[:notice] = "#{@movie.title} was successfully updated."
       redirect_to @movie
     else
       render 'edit'
     end
+  end
+
+  def publish
+    @movie = find_movie
+    authorize @movie, :update?
+    @movie.update_column :draft, false
+    @movie_twin = Movie.all.where('twin_id = ?', @movie.twin_id)
+    if @movie_twin.many?
+      @movie_twin.order(:created_at).last.destroy
+    end
+    redirect_to @movie
   end
 
   def destroy
@@ -60,7 +75,9 @@ class MoviesController < ApplicationController
   end
 
   def movie_params
-    params[:movie].permit(:title, :rating, :release_date, :description, :avatar, :draft)
+    fields = [:title, :rating, :release_date, :description, :twin_id]
+    fields += [:draft] if current_user.admin?
+    params.require(:movie).permit(fields)
   end
 
   def all_ratings

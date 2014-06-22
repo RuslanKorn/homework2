@@ -12,7 +12,9 @@
 
 <h3>Description</h3>
 <% if params[:param] == 'all' %>
+  <%= link_to_if(have_changes && allow.update?, 'Have changes', movie_path(link_to_change, param: 'all')){}%>
   <p class="description"><%= movie.description %></p>
 <% else %>
   <p class="description"><%= truncate(movie.description, length: 100) %> <%= link_to "More→", movie_path(movie, param: 'all') %></p>
 <% end %>
+

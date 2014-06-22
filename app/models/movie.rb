@@ -1,10 +1,9 @@
 class Movie < ActiveRecord::Base
-  has_paper_trail 
   belongs_to :user
   
   mount_uploader :avatar, AvatarUploader
   validates :title, :rating, :description, presence: true
-  validates :title, uniqueness: true
+  #validates :title, uniqueness: true
   validates_format_of :release_date, with: /\A(\d{4}-\d{2}-\d{2})\z/, :message => "format must be yyyy-mm-dd"
 
 scope :list, ->(options) {
@@ -14,8 +13,14 @@ scope :list, ->(options) {
     res
   }
 
+  before_validation :generate_twin_id, on: :create
+
   def self.all_ratings
     all.map(&:rating).uniq
+  end
+
+  def generate_twin_id
+    self.twin_id = SecureRandom.uuid unless self.twin_id
   end
 
 end
