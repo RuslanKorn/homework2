@@ -36,6 +36,7 @@ class MoviesController < ApplicationController
   def update
     @movie = find_movie
     authorize @movie
+    @movie.remove_avatar!
     @movie.attributes = movie_params
     if @movie.valid?
       unless @movie.draft?
